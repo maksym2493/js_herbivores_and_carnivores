@@ -15,7 +15,7 @@ class Herbivore extends Animal {
   hidden = false;
 
   hide() {
-    this.hidden = !this.hidden;
+    this.hidden = true;
   }
 }
 
@@ -23,7 +23,7 @@ class Carnivore extends Animal {
   static DAMAGE = 50;
 
   bite(prey) {
-    if (prey instanceof Carnivore) {
+    if (!(prey instanceof Herbivore)) {
       return;
     }
 
@@ -32,10 +32,7 @@ class Carnivore extends Animal {
     }
 
     if (prey.health <= Carnivore.DAMAGE) {
-      Animal.alive.splice(
-        Animal.alive.findIndex((animal) => animal === prey),
-        1,
-      );
+      Animal.alive = Animal.alive.filter((animal) => animal !== prey);
 
       return;
     }
